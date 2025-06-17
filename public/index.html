@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShelfHeat Analytics - Real-time Retail Intelligence</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="shelf-container">
+        <!-- Sidebar -->
+        <nav class="shelf-sidebar">
+            <div class="shelf-sidebar-icon" title="Dashboard">📊</div>
+            <div class="shelf-sidebar-icon" title="Alerts">⚠️</div>
+            <div class="shelf-sidebar-icon" title="Staff">👥</div>
+            <div class="shelf-sidebar-icon" title="Revenue">💰</div>
+            <div class="shelf-sidebar-icon" title="Analytics">🎯</div>
+            <div class="shelf-sidebar-icon" title="Settings">⚙️</div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="shelf-main-content">
+            <!-- Header -->
+            <header class="shelf-header">
+                <div class="shelf-logo-section">
+                    <div class="shelf-logo">SH</div>
+                    <div>
+                        <h1 class="shelf-title">ShelfHeat Analytics</h1>
+                        <span class="shelf-subtitle">Real-time retail intelligence platform</span>
+                    </div>
+                    <div class="shelf-status-indicators">
+                        <span class="shelf-status-badge pulse">● Live</span>
+                        <span class="shelf-last-update" id="lastUpdate">Last update: --:--:--</span>
+                        <span class="staff-action">1 Staff Action Needed</span>
+                    </div>
+                </div>
+                <div class="shelf-action-buttons">
+                    <button class="shelf-btn shelf-btn-danger">Emergency Protocol</button>
+                    <button class="shelf-btn shelf-btn-primary">Export Report</button>
+                </div>
+            </header>
+
+            <!-- KPI Dashboard Grid -->
+            <div class="shelf-dashboard-grid" id="kpiGrid">
+                <!-- KPI cards will be dynamically generated -->
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="shelf-tabs">
+                <button class="shelf-tab active" data-tab="heatmap">Live Heatmap</button>
+                <button class="shelf-tab" data-tab="alerts">Alerts</button>
+                <button class="shelf-tab" data-tab="staff">Staff AI</button>
+                <button class="shelf-tab" data-tab="revenue">Revenue AI</button>
+                <button class="shelf-tab" data-tab="business">Business Intelligence</button>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="heatmapContent" class="tab-content active">
+                <div class="shelf-heatmap-section">
+                    <div class="shelf-heatmap-header">
+                        <div class="shelf-heatmap-title">
+                            <span style="font-size: 20px;">📍</span>
+                            <h3>Real-time Store Heatmap</h3>
+                            <span class="heatmap-subtitle">
+                                Live customer movement and product interaction data • Updates every 3 seconds
+                            </span>
+                        </div>
+                        <div class="shelf-heatmap-stats">
+                            <div class="shelf-stat-item">
+                                <div class="shelf-stat-value">$8614</div>
+                                <div class="shelf-stat-label">Total Activity Zone</div>
+                            </div>
+                            <div class="shelf-stat-item">
+                                <div class="shelf-stat-value" style="color: var(--shelf-success);">29.1%</div>
+                                <div class="shelf-stat-label">Customer Satisfaction</div>
+                            </div>
+                            <div class="shelf-stat-item">
+                                <div class="shelf-stat-value" style="color: var(--shelf-warning);">Sports</div>
+                                <div class="shelf-stat-label">Peak Activity Zone</div>
+                            </div>
+                            <div class="shelf-stat-item">
+                                <div class="shelf-stat-value" style="color: var(--shelf-primary);">6.5 min</div>
+                                <div class="shelf-stat-label">Avg Dwell Time</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Heatmap Grid -->
+                    <div class="shelf-heatmap-grid" id="heatmapGrid">
+                        <!-- Grid cells will be dynamically generated -->
+                    </div>
+
+                    <!-- Legend -->
+                    <div class="shelf-legend">
+                        <div class="shelf-legend-item">
+                            <div class="shelf-legend-color" style="background: var(--shelf-critical);"></div>
+                            <span>Critical (80%+)</span>
+                        </div>
+                        <div class="shelf-legend-item">
+                            <div class="shelf-legend-color" style="background: var(--shelf-high);"></div>
+                            <span>High (60-80%)</span>
+                        </div>
+                        <div class="shelf-legend-item">
+                            <div class="shelf-legend-color" style="background: var(--shelf-medium);"></div>
+                            <span>Medium (20-40%)</span>
+                        </div>
+                        <div class="shelf-legend-item">
+                            <div class="shelf-legend-color" style="background: var(--shelf-low);"></div>
+                            <span>Low (10-20%)</span>
+                        </div>
+                        <div class="shelf-legend-item">
+                            <div class="shelf-legend-color" style="background: var(--shelf-minimal);"></div>
+                            <span>Minimal (&lt;10%)</span>
+                        </div>
+                    </div>
+
+                    <!-- Store Sections -->
+                    <div class="shelf-store-sections">
+                        <div class="shelf-section-item">
+                            <div class="shelf-section-color" style="background: var(--shelf-critical);"></div>
+                            <span>🚪 Main Entrance</span>
+                        </div>
+                        <div class="shelf-section-item">
+                            <div class="shelf-section-color" style="background: var(--shelf-high);"></div>
+                            <span>📱 Electronics</span>
+                        </div>
+                        <div class="shelf-section-item">
+                            <div class="shelf-section-color" style="background: var(--shelf-success);"></div>
+                            <span>👕 Clothing & Fashion</span>
+                        </div>
+                        <div class="shelf-section-item">
+                            <div class="shelf-section-color" style="background: var(--shelf-warning);"></div>
+                            <span>🏠 Home & Garden</span>
+                        </div>
+                        <div class="shelf-section-item">
+                            <div class="shelf-section-color" style="background: var(--shelf-primary);"></div>
+                            <span>📚 Books & Media</span>
+                        </div>
+                        <div class="shelf-section-item">
+                            <div class="shelf-section-color" style="background: var(--shelf-danger);"></div>
+                            <span>🎮 Toys & Games</span>
+                        </div>
+                        <div class="shelf-section-item">
+                            <div class="shelf-section-color" style="background: #8b5cf6;"></div>
+                            <span>🏃 Sports & Outdoors</span>
+                        </div>
+                        <div class="shelf-section-item">
+                            <div class="shelf-section-color" style="background: #06b6d4;"></div>
+                            <span>🍕 Grocery & Food</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Tab Contents -->
+            <div id="alertsContent" class="tab-content">
+                <div class="shelf-heatmap-section">
+                    <div style="text-align: center; padding: 40px; color: var(--shelf-text-muted);">
+                        <h3>Alerts functionality coming soon...</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div id="staffContent" class="tab-content">
+                <div class="shelf-heatmap-section">
+                    <div style="text-align: center; padding: 40px; color: var(--shelf-text-muted);">
+                        <h3>Staff AI functionality coming soon...</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div id="revenueContent" class="tab-content">
+                <div class="shelf-heatmap-section">
+                    <div style="text-align: center; padding: 40px; color: var(--shelf-text-muted);">
+                        <h3>Revenue AI functionality coming soon...</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div id="businessContent" class="tab-content">
+                <div class="shelf-heatmap-section">
+                    <div style="text-align: center; padding: 40px; color: var(--shelf-text-muted);">
+                        <h3>Business Intelligence functionality coming soon...</h3>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Tooltip -->
+    <div id="tooltip" class="shelf-tooltip"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
