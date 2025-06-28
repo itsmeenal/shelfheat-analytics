@@ -35,8 +35,10 @@
                     </div>
                 </div>
                 <div class="shelf-action-buttons">
-                    <button class="shelf-btn shelf-btn-danger">Emergency Protocol</button>
-                    <button class="shelf-btn shelf-btn-primary">Export Report</button>
+                    <button class="shelf-btn shelf-btn-danger" onclick="triggerEmergencyProtocol()">Emergency Protocol</button>
+
+                    <button class="shelf-btn shelf-btn-primary" onclick="exportReport()">Export Report</button>
+
                 </div>
             </header>
 
@@ -152,40 +154,43 @@
                 </div>
             </div>
 
-            <!-- Other Tab Contents -->
             <div id="alertsContent" class="tab-content">
-                <div class="shelf-heatmap-section">
-                    <div style="text-align: center; padding: 40px; color: var(--shelf-text-muted);">
-                        <h3>Alerts functionality coming soon...</h3>
-                    </div>
-                </div>
-            </div>
+  <div class="shelf-heatmap-section" style="text-align: center; padding: 40px;">
+    <h3>Alerts Management</h3>
+    <p>Here you can view and manage all alerts. Set custom notifications and alerts based on specific criteria.</p>
+    <button onclick="setAlert()">Create Alert</button>
+    <div id="alertsOutput"></div> <!-- ✅ ADD THIS -->
+  </div>
+</div>
 
-            <div id="staffContent" class="tab-content">
-                <div class="shelf-heatmap-section">
-                    <div style="text-align: center; padding: 40px; color: var(--shelf-text-muted);">
-                        <h3>Staff AI functionality coming soon...</h3>
-                    </div>
-                </div>
-            </div>
+<div id="staffContent" class="tab-content">
+  <div class="shelf-heatmap-section" style="text-align: center; padding: 40px;">
+    <h3>Staff AI Management</h3>
+    <p>Access AI tools for analyzing staff performance and productivity metrics. Optimize workforce deployment.</p>
+    <button onclick="optimizeStaff()">Optimize Staff</button>
+    <div id="staffOutput"></div> <!-- ✅ ADD THIS -->
+  </div>
+</div>
 
-            <div id="revenueContent" class="tab-content">
-                <div class="shelf-heatmap-section">
-                    <div style="text-align: center; padding: 40px; color: var(--shelf-text-muted);">
-                        <h3>Revenue AI functionality coming soon...</h3>
-                    </div>
-                </div>
-            </div>
+<div id="revenueContent" class="tab-content">
+  <div class="shelf-heatmap-section" style="text-align: center; padding: 40px;">
+    <h3>Revenue Analysis</h3>
+    <p>Analyze your revenue streams and identify growth opportunities. Use predictive analytics to forecast future revenues.</p>
+    <button onclick="generateReport()">Generate Revenue Report</button>
+    <div id="revenueOutput"></div> <!-- ✅ ADD THIS -->
+  </div>
+</div>
 
-            <div id="businessContent" class="tab-content">
-                <div class="shelf-heatmap-section">
-                    <div style="text-align: center; padding: 40px; color: var(--shelf-text-muted);">
-                        <h3>Business Intelligence functionality coming soon...</h3>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
+<div id="businessContent" class="tab-content">
+  <div class="shelf-heatmap-section" style="text-align: center; padding: 40px;">
+    <h3>Business Intelligence Tools</h3>
+    <p>Utilize BI tools to gather insights and create interactive dashboards for informed decision-making.</p>
+    <button onclick="createDashboard()">Create Dashboard</button>
+    <div id="dashboardOutput"></div> <!-- ✅ ADD THIS -->
+  </div>
+</div>
+
+
 
     <!-- Tooltip -->
     <div id="tooltip" class="shelf-tooltip"></div>

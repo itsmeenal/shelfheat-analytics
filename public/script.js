@@ -1,11 +1,11 @@
 class ShelfHeatAnalytics {
   constructor() {
     this.data = {
-      kpi: null,
-      environmental: null,
-      heatmap: null
+      kpi: {},
+      environmental: {},
+      heatmap: []
     };
-    
+    window.analytics = this;
     this.init();
     this.startRealTimeUpdates();
   }
@@ -329,3 +329,159 @@ class ShelfHeatAnalytics {
 document.addEventListener('DOMContentLoaded', () => {
   new ShelfHeatAnalytics();
 });
+// Add backend-connected handlers for functional buttons
+// === ✅ FIXED BUTTON FUNCTIONS ===
+async function setAlert() {
+  const output = document.getElementById('alertsOutput');
+  output.innerHTML = '⏳ Loading alerts...';
+
+  try {
+    const res = await fetch('/api/staff-alerts');
+    const alerts = await res.json();
+
+    if (!alerts.length) {
+      output.innerHTML = '<p>✅ No active staff alerts!</p>';
+      return;
+    }
+
+    output.innerHTML = alerts.map(a => `
+      <div class="shelf-kpi-card">
+        <strong>🚨 ${a.type}</strong><br>
+        <p>${a.message}</p>
+        <small>🕒 ${a.time}</small>
+      </div>
+    `).join('');
+  } catch (err) {
+    output.innerHTML = `<p style="color: red;">❌ Failed to load alerts: ${err.message}</p>`;
+  }
+}
+
+async function optimizeStaff() {
+  const output = document.getElementById('staffOutput');
+  output.innerHTML = '⏳ Running optimization...';
+
+  try {
+    const res = await fetch('/api/ai-predictions');
+    const data = await res.json();
+
+    if (!data.recommendations?.length) {
+      output.innerHTML = '<p>✅ No optimization suggestions needed.</p>';
+      return;
+    }
+
+    output.innerHTML = data.recommendations.map(r => `
+      <div class="shelf-kpi-card">
+        <strong>💡 ${r.action}</strong><br>
+        <small>Confidence: ${r.confidence}</small>
+      </div>
+    `).join('');
+  } catch (err) {
+    output.innerHTML = `<p style="color: red;">❌ Optimization failed: ${err.message}</p>`;
+  }
+}
+
+async function generateReport() {
+  const output = document.getElementById('revenueOutput');
+  output.innerHTML = '⏳ Generating report...';
+
+  try {
+    const res = await fetch('/api/revenue-report');
+    const report = await res.json();
+
+    const productTrends = report.productTrends.map(p => `
+      <li>📦 ${p.name} – Growth: ${p.growth}</li>
+    `).join('');
+
+    output.innerHTML = `
+      <div class="shelf-kpi-card">
+        <p><strong>💰 Revenue Today:</strong> $${report.revenueToday}</p>
+        <p><strong>⏰ Peak Hours:</strong> ${report.peakHours.join(', ')}</p>
+        <p><strong>📈 Product Trends:</strong></p>
+        <ul>${productTrends}</ul>
+      </div>
+    `;
+  } catch (err) {
+    output.innerHTML = `<p style="color: red;">❌ Failed to load report: ${err.message}</p>`;
+  }
+}
+
+async function createDashboard() {
+  const output = document.getElementById('dashboardOutput');
+  output.innerHTML = '⏳ Loading dashboards...';
+
+  try {
+    const res = await fetch('/api/business-intelligence');
+    const data = await res.json();
+
+    if (!data.dashboards?.length) {
+      output.innerHTML = '<p>⚠️ No dashboards found.</p>';
+      return;
+    }
+
+    output.innerHTML = data.dashboards.map(d => `
+      <div class="shelf-kpi-card">
+        <strong>📊 ${d.title}</strong><br>
+        <p>${d.description}</p>
+        <small>🧩 Widgets: ${d.widgets.join(', ')}</small><br>
+        <small>🕒 Last Updated: ${d.lastUpdated}</small>
+      </div>
+    `).join('');
+  } catch (err) {
+    output.innerHTML = `<p style="color: red;">❌ Dashboard loading failed: ${err.message}</p>`;
+  }
+}
+
+function exportReport() {
+  const { kpi, environmental, heatmap } = window.analytics?.data || {};
+
+  if (!kpi || !environmental || !heatmap) {
+    alert('⚠️ Data not fully loaded yet.');
+    return;
+  }
+
+  const kpiReport = `
+📊 ShelfHeat Report
+========================
+
+🧍 Live Customers: ${kpi.liveCustomers}
+⏱️ Queue Count: ${kpi.queueCount}
+🎯 Conversion Rate: ${kpi.conversionRate}%
+💰 Revenue/Hour: $${kpi.revenueHour}
+🚨 Active Alerts: ${kpi.activeAlerts}
+🔒 Security Status: ${kpi.securityStatus}
+
+🌡️ Environmental Monitoring
+------------------------
+Temperature: ${environmental.temperature.toFixed(1)}°C
+Humidity: ${environmental.humidity}%
+Air Quality: ${environmental.airQuality}
+Noise Level: ${environmental.noiseLevel} dB
+Lighting: ${environmental.lighting}
+
+📍 Heatmap Summary
+------------------------
+Top 5 Active Zones:
+${heatmap.sort((a,b)=>b.activity-a.activity).slice(0,5).map(c=>`Cell ${c.cellId} (${c.section}) - ${c.activity}%`).join('\n')}
+`;
+
+  const blob = new Blob([kpiReport], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `ShelfHeat_Report_${new Date().toISOString().slice(0,10)}.txt`;
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+function triggerEmergencyProtocol() {
+  const confirmed = confirm("🚨 Are you sure you want to trigger the emergency protocol?");
+  if (!confirmed) return;
+
+  // Add red flash effect to the header or page
+  const header = document.querySelector('.shelf-header');
+  header.style.animation = 'emergencyFlash 0.5s ease-in-out 6';
+
+  alert("🚨 Emergency protocol has been triggered!\nAll staff have been notified.");
+}

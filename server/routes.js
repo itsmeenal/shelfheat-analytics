@@ -1,7 +1,7 @@
 const storage = require('./storage');
 
 function registerRoutes(app) {
-  // Get latest KPI data
+  // === Existing Routes ===
   app.get("/api/kpi", (req, res) => {
     try {
       const kpi = storage.getLatestKPI();
@@ -11,7 +11,6 @@ function registerRoutes(app) {
     }
   });
 
-  // Get latest environmental data
   app.get("/api/environmental", (req, res) => {
     try {
       const environmental = storage.getLatestEnvironmental();
@@ -21,7 +20,6 @@ function registerRoutes(app) {
     }
   });
 
-  // Get latest heatmap data
   app.get("/api/heatmap", (req, res) => {
     try {
       const heatmap = storage.getLatestHeatmap();
@@ -31,7 +29,6 @@ function registerRoutes(app) {
     }
   });
 
-  // Simulate real-time data updates
   app.post("/api/simulate-update", (req, res) => {
     try {
       const currentKPI = storage.getLatestKPI();
@@ -39,7 +36,6 @@ function registerRoutes(app) {
       const currentHeatmap = storage.getLatestHeatmap();
 
       if (currentKPI && currentEnvironmental && currentHeatmap) {
-        // Simulate KPI changes
         const newKPI = {
           liveCustomers: Math.max(45, Math.min(85, currentKPI.liveCustomers + (Math.floor(Math.random() * 6) - 3))),
           queueCount: Math.floor(Math.random() * 8),
@@ -49,7 +45,6 @@ function registerRoutes(app) {
           securityStatus: Math.floor(Math.random() * 2),
         };
 
-        // Simulate environmental changes
         const newEnvironmental = {
           temperature: Math.max(20, Math.min(24, currentEnvironmental.temperature + (Math.random() - 0.5) * 0.2)),
           humidity: Math.max(45, Math.min(65, currentEnvironmental.humidity + (Math.floor(Math.random() * 6) - 3))),
@@ -58,14 +53,12 @@ function registerRoutes(app) {
           lighting: Math.random() > 0.95 ? "suboptimal" : "optimal",
         };
 
-        // Simulate heatmap changes
         const newHeatmapData = currentHeatmap.map(cell => ({
           cellId: cell.cellId,
           activity: Math.max(0, Math.min(100, cell.activity + (Math.random() > 0.9 ? (Math.floor(Math.random() * 10) - 5) : 0))),
           section: cell.section,
         }));
 
-        // Save new data
         storage.updateKPI(newKPI);
         storage.updateEnvironmental(newEnvironmental);
         storage.updateHeatmapData(newHeatmapData);
@@ -75,6 +68,59 @@ function registerRoutes(app) {
     } catch (error) {
       res.status(500).json({ error: "Failed to simulate data update" });
     }
+  });
+
+  // === 🔥 NEW ROUTES for Buttons ===
+
+  // Alerts
+  app.get("/api/staff-alerts", (req, res) => {
+    res.json([
+      { id: 1, type: "Overcrowding", message: "Too many customers in Aisle 3", time: "09:15 AM" },
+      { id: 2, type: "Queue Length", message: "Checkout counter queue exceeds limit", time: "10:40 AM" }
+    ]);
+  });
+
+  // Staff AI
+  app.get("/api/ai-predictions", (req, res) => {
+    res.json({
+      recommendations: [
+        { action: "Deploy more staff to Zone B", confidence: "High" },
+        { action: "Schedule a break for Cashier 2", confidence: "Medium" }
+      ]
+    });
+  });
+
+  // Revenue AI
+  app.get("/api/revenue-report", (req, res) => {
+    res.json({
+      revenueToday: 4850,
+      peakHours: ["1PM - 3PM", "5PM - 7PM"],
+      productTrends: [
+        { name: "Milk", growth: "18%" },
+        { name: "Snacks", growth: "24%" },
+        { name: "Soft Drinks", growth: "15%" }
+      ]
+    });
+  });
+
+  // Business Intelligence
+  app.get("/api/business-intelligence", (req, res) => {
+    res.json({
+      dashboards: [
+        {
+          id: "bi001",
+          title: "Foot Traffic Trends",
+          widgets: ["Line Chart", "Geo Heatmap"],
+          lastUpdated: "Today, 12:10 PM"
+        },
+        {
+          id: "bi002",
+          title: "Revenue Breakdown",
+          widgets: ["Pie Chart", "Daily Totals"],
+          lastUpdated: "Today, 11:30 AM"
+        }
+      ]
+    });
   });
 }
 
